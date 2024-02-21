@@ -53,7 +53,7 @@
         "y": 120,
         "wires": [
             [
-                "sd_aiC3OfHzLvLGTfbL"
+                "sd_mJBytcOyrUKDF50f"
             ]
         ],
         "__n_excludedFromValidation__": {},
@@ -70,7 +70,7 @@
         "script": "console.log(bh.local.result,'result consoling after adding')\nbh.input.response = {\n    statusCode:200,\n    message:'Data add successfully'\n}",
         "functionName": "sd_A1SudyGfHtEDRAKD",
         "category": "Function",
-        "x": 625,
+        "x": 825,
         "y": 120,
         "wires": [
             []
@@ -95,8 +95,8 @@
         "resultMapping": "bh.local.result",
         "functionName": "sd_kPNu3vM51ScSbwJo",
         "category": "Data Model",
-        "x": 265,
-        "y": 40,
+        "x": 165,
+        "y": 20,
         "wires": [
             []
         ],
@@ -144,7 +144,7 @@
         "dbType": "postgres",
         "functionName": "sd_pj5zd9GdNJ97rqXQ",
         "category": "Storage",
-        "x": 405,
+        "x": 685,
         "y": 120,
         "wires": [
             [
@@ -163,14 +163,36 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "bh.local.insertQuery = `INSERT INTO \"public\".\"user_details\"(\"name\", \"phone\", \"email\", \"file\", \"details\") VALUES ($1, $2, $3, $4, $5) RETURNING \"id\";`\nconsole.log([bh?.input?.file], bh?.input?.data?.details)\nbh.local.insertValues =  [bh?.input?.data?.name, bh?.input?.data?.phone, bh?.input?.data?.email,[bh?.input?.file], bh?.input?.data?.details];",
+        "script": "bh.local.insertQuery = `INSERT INTO \"public\".\"user_details\"(\"name\", \"phone\", \"email\", \"file\",\"sex\", \"details\") VALUES ($1, $2, $3, $4, $5, $6) RETURNING \"id\";`\nconsole.log([bh?.input?.file], bh?.input?.data?.details)\nbh.local.insertValues =  [bh?.input?.data?.name, bh?.input?.data?.phone, bh?.input?.data?.email,bh?.local?.file,bh.input?.data?.sex, bh?.input?.data?.details];",
         "functionName": "sd_aiC3OfHzLvLGTfbL",
         "category": "Function",
-        "x": 260,
+        "x": 505,
         "y": 120,
         "wires": [
             [
                 "sd_pj5zd9GdNJ97rqXQ"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_mJBytcOyrUKDF50f",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_eio0SSjuVYF2cm7t",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "const fs = require('fs')\nconst mime = require('mime-types')\nconst cloudinary = require(\"cloudinary\").v2;\n\nlet cloud_name = process.env.CLOUDNAME\nlet api_key = process.env.CLOUD_API\nlet api_secret = process.env.CLOUD_SECRET\n\ncloudinary.config({ \n    cloud_name, \n    api_key, \n    api_secret \n});\n\nconst file = bh?.input?.file\nif (file) {\n    bh.local.file = ''\n    const mimeType = mime.lookup(file.originalname);\n    console.log(mimeType,'mimetype')\n    if (mimeType && (mimeType.includes(\"image/\")||mimeType.includes(\"application/pdf\"))) {\n        const upload = await cloudinary.uploader.upload(file.path);\n        bh.local.file = upload.secure_url;\n        if (fs.existsSync(file.path)) fs.unlinkSync(file.path);\n    };\n}\n\nconsole.log(bh.local.file,'consoling file after cloudinary')",
+        "functionName": "sd_mJBytcOyrUKDF50f",
+        "category": "Function",
+        "x": 345,
+        "y": 120,
+        "wires": [
+            [
+                "sd_aiC3OfHzLvLGTfbL"
             ]
         ],
         "__n_excludedFromValidation__": {},

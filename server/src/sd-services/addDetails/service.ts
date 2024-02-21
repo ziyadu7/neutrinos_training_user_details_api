@@ -104,7 +104,7 @@ export class service {
     try {
       bh = this.sdService.__constructDefault(bh);
       this.tracerService.sendData(spanInst, bh);
-      bh = await this.sd_aiC3OfHzLvLGTfbL(bh, parentSpanInst);
+      bh = await this.sd_mJBytcOyrUKDF50f(bh, parentSpanInst);
       //appendnew_next_addDetails
       return (
         // formatting output variables
@@ -127,19 +127,71 @@ export class service {
   }
   //appendnew_flow_service_start
 
+  async sd_mJBytcOyrUKDF50f(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'sd_mJBytcOyrUKDF50f',
+      parentSpanInst
+    );
+    try {
+      const fs = require('fs');
+      const mime = require('mime-types');
+      const cloudinary = require('cloudinary').v2;
+
+      let cloud_name = process.env.CLOUDNAME;
+      let api_key = process.env.CLOUD_API;
+      let api_secret = process.env.CLOUD_SECRET;
+
+      cloudinary.config({
+        cloud_name,
+        api_key,
+        api_secret,
+      });
+
+      const file = bh?.input?.file;
+      if (file) {
+        bh.local.file = '';
+        const mimeType = mime.lookup(file.originalname);
+        console.log(mimeType, 'mimetype');
+        if (
+          mimeType &&
+          (mimeType.includes('image/') || mimeType.includes('application/pdf'))
+        ) {
+          const upload = await cloudinary.uploader.upload(file.path);
+          bh.local.file = upload.secure_url;
+          if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
+        }
+      }
+
+      console.log(bh.local.file, 'consoling file after cloudinary');
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sd_aiC3OfHzLvLGTfbL(bh, parentSpanInst);
+      //appendnew_next_sd_mJBytcOyrUKDF50f
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_mJBytcOyrUKDF50f',
+        spanInst,
+        'sd_mJBytcOyrUKDF50f'
+      );
+    }
+  }
+
   async sd_aiC3OfHzLvLGTfbL(bh, parentSpanInst) {
     const spanInst = this.tracerService.createSpan(
       'sd_aiC3OfHzLvLGTfbL',
       parentSpanInst
     );
     try {
-      bh.local.insertQuery = `INSERT INTO "public"."user_details"("name", "phone", "email", "file", "details") VALUES ($1, $2, $3, $4, $5) RETURNING "id";`;
+      bh.local.insertQuery = `INSERT INTO "public"."user_details"("name", "phone", "email", "file","sex", "details") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id";`;
       console.log([bh?.input?.file], bh?.input?.data?.details);
       bh.local.insertValues = [
         bh?.input?.data?.name,
         bh?.input?.data?.phone,
         bh?.input?.data?.email,
-        [bh?.input?.file],
+        bh?.local?.file,
+        bh.input?.data?.sex,
         bh?.input?.data?.details,
       ];
       this.tracerService.sendData(spanInst, bh);

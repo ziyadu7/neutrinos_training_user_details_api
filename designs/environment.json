@@ -18,7 +18,10 @@
             "DB_USERNAME": "server",
             "DB_PORT": "server",
             "DB_PASSWORD": "server",
-            "DB_NAME": "server"
+            "DB_NAME": "server",
+            "CLOUD_API": "server",
+            "CLOUD_SECRET": "server",
+            "CLOUDNAME": "server"
         }
     },
     "dev": {
@@ -40,7 +43,10 @@
             "DB_USERNAME": "postgres",
             "DB_PORT": "5432",
             "DB_PASSWORD": "watchthanu",
-            "DB_NAME": "neutrinos"
+            "DB_NAME": "neutrinos",
+            "CLOUD_API": "415994332381766",
+            "CLOUD_SECRET": "vauu2EnxYnvCnFFLvaAiERFvZd8",
+            "CLOUDNAME": "dksvxykdc"
         }
     },
     "prod": {
@@ -62,7 +68,10 @@
             "DB_USERNAME": "postgres",
             "DB_PORT": "5432",
             "DB_PASSWORD": "watchthanu",
-            "DB_NAME": "neutrinos"
+            "DB_NAME": "neutrinos",
+            "CLOUD_API": "415994332381766",
+            "CLOUD_SECRET": "vauu2EnxYnvCnFFLvaAiERFvZd8",
+            "CLOUDNAME": "dksvxykdc"
         }
     }
 }

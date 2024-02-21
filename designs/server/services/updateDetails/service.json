@@ -1,0 +1,591 @@
+[
+    {
+        "id": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "type": "tab",
+        "createdDate": "2024-02-21T15:19:54.521Z",
+        "label": "service",
+        "disabled": false,
+        "info": "",
+        "functionSeq": 0,
+        "generateNext": true,
+        "serviceName": "service",
+        "relativeParentPath": "updateDetails"
+    },
+    {
+        "id": "sd_QHfw4QI3uTeWSHt5",
+        "type": "Start",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "client-server",
+        "nodeType": "start",
+        "name": "edit details",
+        "outputs": 1,
+        "inputVariables": [
+            {
+                "key": "data",
+                "defaultValue": {
+                    "type": "any",
+                    "value": ""
+                },
+                "output": false
+            },
+            {
+                "key": "response",
+                "defaultValue": {
+                    "type": "any",
+                    "value": ""
+                },
+                "output": true
+            },
+            {
+                "key": "file",
+                "defaultValue": {
+                    "type": "any",
+                    "value": ""
+                },
+                "output": false
+            },
+            {
+                "key": "isNumberChange",
+                "defaultValue": {
+                    "type": "any",
+                    "value": ""
+                },
+                "output": false
+            }
+        ],
+        "localVariables": [],
+        "accept_bh": false,
+        "functionName": "editDetails",
+        "category": "General",
+        "x": 65,
+        "y": 160,
+        "wires": [
+            [
+                "sd_m3nxgNBys7LhLMGy"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "service"
+    },
+    {
+        "id": "sd_KQPiJrlbWq81VvVt",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "console.log(bh.local.result,'result consoling after adding')\nbh.input.response = {\n    statusCode:200,\n    message:'Data updated successfully'\n}",
+        "functionName": "sd_KQPiJrlbWq81VvVt",
+        "category": "Function",
+        "x": 1145,
+        "y": 40,
+        "wires": [
+            []
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_urpZRm0a4Hwc4075",
+        "type": "ExecuteSql",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "databaseConfig": "sd_0MpEPLPhEvkKRNun",
+        "queryType": "",
+        "resultMap": {
+            "type": "bh.local",
+            "value": "result"
+        },
+        "multipleQuery": "",
+        "singleQuery": {
+            "type": "bh.local",
+            "value": "insertQuery"
+        },
+        "inputs": 1,
+        "outputs": 1,
+        "params": [],
+        "paramMappingObj": {
+            "type": "bh.local",
+            "value": "insertValues"
+        },
+        "dbType": "postgres",
+        "functionName": "sd_urpZRm0a4Hwc4075",
+        "category": "Storage",
+        "x": 985,
+        "y": 40,
+        "wires": [
+            [
+                "sd_KQPiJrlbWq81VvVt"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_Vkptvhzed7xsWlwu",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.local.insertQuery = `UPDATE \"public\".\"user_details\"\nSET \"name\" = $1, \"email\" = $2, \"file\" = $3, \"sex\" = $4, \"details\" = $5, \"phone\" = $6\nWHERE \"id\" = $7\nRETURNING \"id\";`\nbh.local.insertValues = [bh?.input?.data?.name, bh?.input?.data?.email, bh?.local?.file, bh.input?.data?.sex, bh?.input?.data?.details, bh?.input?.data?.phone, bh?.input?.data?.id];",
+        "functionName": "sd_Vkptvhzed7xsWlwu",
+        "category": "Function",
+        "x": 865,
+        "y": 40,
+        "wires": [
+            [
+                "sd_urpZRm0a4Hwc4075"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_LGdSJEER5nk9lleR",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "const fs = require('fs')\nconst mime = require('mime-types')\nconst cloudinary = require(\"cloudinary\").v2;\n\nlet cloud_name = process.env.CLOUDNAME\nlet api_key = process.env.CLOUD_API\nlet api_secret = process.env.CLOUD_SECRET\n\ncloudinary.config({ \n    cloud_name, \n    api_key, \n    api_secret \n});\n\nconst file = bh?.input?.file\nif (file) {\n    bh.local.file = ''\n    const mimeType = mime.lookup(file.originalname);\n    console.log(mimeType,'mimetype')\n    if (mimeType && (mimeType.includes(\"image/\")||mimeType.includes(\"application/pdf\"))) {\n        const upload = await cloudinary.uploader.upload(file.path);\n        bh.local.file = upload.secure_url;\n        if (fs.existsSync(file.path)) fs.unlinkSync(file.path);\n    };\n}\n\nconsole.log(bh.local.file,'consoling file after cloudinary')",
+        "functionName": "sd_LGdSJEER5nk9lleR",
+        "category": "Function",
+        "x": 705,
+        "y": 40,
+        "wires": [
+            [
+                "sd_Vkptvhzed7xsWlwu"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_QMpf9c6nIqwUkROx",
+        "type": "Switch",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "property": "file",
+        "propertyType": "bh.input",
+        "propertyGv": "bh.input.file",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "functionName": "sd_QMpf9c6nIqwUkROx",
+        "category": "Function",
+        "x": 345,
+        "y": 160,
+        "wires": [
+            [
+                "sd_PXLhZzgF4sFQMhmA"
+            ],
+            [
+                "sd_SwSYM5ZA264b3uj9"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_m3nxgNBys7LhLMGy",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "checking file",
+        "script": "console.log(bh.input.file,'file consoling')\nbh.input.file = bh.input?.file ? bh.input?.file : null",
+        "functionName": "checkingFile",
+        "category": "Function",
+        "x": 205,
+        "y": 160,
+        "wires": [
+            [
+                "sd_QMpf9c6nIqwUkROx"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_3vXB75jitxX0bg4Z",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.input.response = {\n    statusCode:200,\n    message:'Data updated successfully'\n}",
+        "functionName": "sd_3vXB75jitxX0bg4Z",
+        "category": "Function",
+        "x": 1085,
+        "y": 340,
+        "wires": [
+            []
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_RSJN5dnKeudn9xCq",
+        "type": "ExecuteSql",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "databaseConfig": "sd_0MpEPLPhEvkKRNun",
+        "queryType": "",
+        "resultMap": {
+            "type": "bh.local",
+            "value": "result"
+        },
+        "multipleQuery": "",
+        "singleQuery": {
+            "type": "bh.local",
+            "value": "insertQuery"
+        },
+        "inputs": 1,
+        "outputs": 1,
+        "params": [],
+        "paramMappingObj": {
+            "type": "bh.local",
+            "value": "insertValues"
+        },
+        "dbType": "postgres",
+        "functionName": "sd_RSJN5dnKeudn9xCq",
+        "category": "Storage",
+        "x": 925,
+        "y": 340,
+        "wires": [
+            [
+                "sd_3vXB75jitxX0bg4Z"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_UUaGoO2wPwwJTGPl",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.local.insertQuery = `UPDATE \"public\".\"user_details\"\nSET \"name\" = $1, \"email\" = $2,\"sex\" = $3, \"details\" = $4\nWHERE \"id\" = $5\nRETURNING \"id\";`\nbh.local.insertValues = [bh?.input?.data?.name, bh?.input?.data?.email, bh.input?.data?.sex, bh?.input?.data?.details, bh?.input?.data?.id];",
+        "functionName": "sd_UUaGoO2wPwwJTGPl",
+        "category": "Function",
+        "x": 725,
+        "y": 340,
+        "wires": [
+            [
+                "sd_RSJN5dnKeudn9xCq"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_PXLhZzgF4sFQMhmA",
+        "type": "Switch",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "property": "isNumberChange",
+        "propertyType": "bh.input",
+        "propertyGv": "bh.input.isNumberChange",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str",
+                "gv": "\"true\""
+            },
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str",
+                "gv": "\"false\""
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "functionName": "sd_PXLhZzgF4sFQMhmA",
+        "category": "Function",
+        "x": 525,
+        "y": 100,
+        "wires": [
+            [
+                "sd_LGdSJEER5nk9lleR"
+            ],
+            [
+                "sd_7W50FBO0ZKOtPF1J"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_R7K2cEcA6pqbW0Op",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "console.log(bh.local.result,'result consoling after adding')\nbh.input.response = {\n    statusCode:200,\n    message:'Data updated successfully'\n}",
+        "functionName": "sd_R7K2cEcA6pqbW0Op",
+        "category": "Function",
+        "x": 1145,
+        "y": 160,
+        "wires": [
+            []
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_ssC8uDKGFQfAHKi4",
+        "type": "ExecuteSql",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "databaseConfig": "sd_0MpEPLPhEvkKRNun",
+        "queryType": "",
+        "resultMap": {
+            "type": "bh.local",
+            "value": "result"
+        },
+        "multipleQuery": "",
+        "singleQuery": {
+            "type": "bh.local",
+            "value": "insertQuery"
+        },
+        "inputs": 1,
+        "outputs": 1,
+        "params": [],
+        "paramMappingObj": {
+            "type": "bh.local",
+            "value": "insertValues"
+        },
+        "dbType": "postgres",
+        "functionName": "sd_ssC8uDKGFQfAHKi4",
+        "category": "Storage",
+        "x": 985,
+        "y": 160,
+        "wires": [
+            [
+                "sd_R7K2cEcA6pqbW0Op"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_fxNgPCpeeFi055EE",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.local.insertQuery = `UPDATE \"public\".\"user_details\"\nSET \"name\" = $1, \"email\" = $2, \"file\" = $3, \"sex\" = $4, \"details\" = $5\nWHERE \"id\" = $6\nRETURNING \"id\";`\nbh.local.insertValues = [bh?.input?.data?.name, bh?.input?.data?.email, bh?.local?.file, bh.input?.data?.sex, bh?.input?.data?.details, bh?.input?.data?.id,];",
+        "functionName": "sd_fxNgPCpeeFi055EE",
+        "category": "Function",
+        "x": 865,
+        "y": 160,
+        "wires": [
+            [
+                "sd_ssC8uDKGFQfAHKi4"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_7W50FBO0ZKOtPF1J",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "const fs = require('fs')\nconst mime = require('mime-types')\nconst cloudinary = require(\"cloudinary\").v2;\n\nlet cloud_name = process.env.CLOUDNAME\nlet api_key = process.env.CLOUD_API\nlet api_secret = process.env.CLOUD_SECRET\n\ncloudinary.config({ \n    cloud_name, \n    api_key, \n    api_secret \n});\n\nconst file = bh?.input?.file\nif (file) {\n    bh.local.file = ''\n    const mimeType = mime.lookup(file.originalname);\n    console.log(mimeType,'mimetype')\n    if (mimeType && (mimeType.includes(\"image/\")||mimeType.includes(\"application/pdf\"))) {\n        const upload = await cloudinary.uploader.upload(file.path);\n        bh.local.file = upload.secure_url;\n        if (fs.existsSync(file.path)) fs.unlinkSync(file.path);\n    };\n}\n\nconsole.log(bh.local.file,'consoling file after cloudinary')",
+        "functionName": "sd_7W50FBO0ZKOtPF1J",
+        "category": "Function",
+        "x": 705,
+        "y": 160,
+        "wires": [
+            [
+                "sd_fxNgPCpeeFi055EE"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_SwSYM5ZA264b3uj9",
+        "type": "Switch",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "property": "isNumberChange",
+        "propertyType": "bh.input",
+        "propertyGv": "bh.input.isNumberChange",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "true",
+                "vt": "str",
+                "gv": "\"true\""
+            },
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str",
+                "gv": "\"false\""
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "functionName": "sd_SwSYM5ZA264b3uj9",
+        "category": "Function",
+        "x": 525,
+        "y": 220,
+        "wires": [
+            [
+                "sd_w3CfeNQZSIzX9jzV"
+            ],
+            [
+                "sd_UUaGoO2wPwwJTGPl"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_DuWnQiC8gsBrmKgk",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "console.log(bh.local.result,'result consoling after adding')\nbh.input.response = {\n    statusCode:200,\n    message:'Data updated successfully'\n}",
+        "functionName": "sd_DuWnQiC8gsBrmKgk",
+        "category": "Function",
+        "x": 1085,
+        "y": 260,
+        "wires": [
+            []
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_fHJNbNaT5eNwMDBS",
+        "type": "ExecuteSql",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "databaseConfig": "sd_0MpEPLPhEvkKRNun",
+        "queryType": "",
+        "resultMap": {
+            "type": "bh.local",
+            "value": "result"
+        },
+        "multipleQuery": "",
+        "singleQuery": {
+            "type": "bh.local",
+            "value": "insertQuery"
+        },
+        "inputs": 1,
+        "outputs": 1,
+        "params": [],
+        "paramMappingObj": {
+            "type": "bh.local",
+            "value": "insertValues"
+        },
+        "dbType": "postgres",
+        "functionName": "sd_fHJNbNaT5eNwMDBS",
+        "category": "Storage",
+        "x": 925,
+        "y": 260,
+        "wires": [
+            [
+                "sd_DuWnQiC8gsBrmKgk"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_w3CfeNQZSIzX9jzV",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "script": "bh.local.insertQuery = `UPDATE \"public\".\"user_details\"\nSET \"name\" = $1, \"email\" = $2, \"sex\" = $3, \"details\" = $4, \"phone\" = $5\nWHERE \"id\" = $6\nRETURNING \"id\";`\nbh.local.insertValues = [bh?.input?.data?.name, bh?.input?.data?.email, bh.input?.data?.sex, bh?.input?.data?.details, bh?.input?.data?.phone, bh?.input?.data?.id];",
+        "functionName": "sd_w3CfeNQZSIzX9jzV",
+        "category": "Function",
+        "x": 725,
+        "y": 260,
+        "wires": [
+            [
+                "sd_fHJNbNaT5eNwMDBS"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    }
+]
