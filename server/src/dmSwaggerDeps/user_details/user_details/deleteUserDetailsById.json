@@ -1,0 +1,46 @@
+{
+    "/dm/user_details/user_details/delete-by-id": {
+        "post": {
+            "consumes": [],
+            "produces": [],
+            "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "schema": {
+                        "properties": {
+                            "filter": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "filter"
+                        ]
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/user_details ~ user_details"
+                        }
+                    },
+                    "description": ""
+                }
+            },
+            "tags": [
+                "user_details"
+            ]
+        }
+    }
+}

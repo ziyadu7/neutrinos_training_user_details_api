@@ -1,0 +1,39 @@
+{
+    "/dm/user_details/user_details/create-all": {
+        "post": {
+            "consumes": [],
+            "produces": [],
+            "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "schema": {
+                        "type": "array",
+                        "properties": {
+                            "user_details": {
+                                "items": {
+                                    "$ref": "#/definitions/user_details ~ user_details"
+                                }
+                            }
+                        },
+                        "required": []
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/user_details ~ user_details"
+                        }
+                    },
+                    "description": ""
+                }
+            },
+            "tags": [
+                "user_details"
+            ]
+        }
+    }
+}

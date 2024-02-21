@@ -1,0 +1,163 @@
+{
+    "name": "user_details",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "description": "",
+    "type": "object",
+    "id": "_EN_ga5r31ylxl",
+    "y": -2,
+    "properties": {
+        "id": {
+            "name": "id",
+            "format": "",
+            "type": "number",
+            "description": "",
+            "default": "",
+            "__n__metadata__": {
+                "id": "_Att_uaan1fvtxs",
+                "nullable": false,
+                "dbType": "bigint",
+                "primary": true,
+                "placeholder": "",
+                "dbColName": "",
+                "constraints": {
+                    "primaryGenerated": true
+                }
+            }
+        },
+        "name": {
+            "name": "name",
+            "format": "",
+            "type": "string",
+            "description": "",
+            "default": "",
+            "__n__metadata__": {
+                "id": "_Att_kyxdc4l6ai",
+                "subCategoryType": null,
+                "nullable": false,
+                "dbType": "text",
+                "primary": false,
+                "placeholder": "",
+                "dbColName": "",
+                "constraints": {}
+            }
+        },
+        "phone": {
+            "name": "phone",
+            "format": "",
+            "type": "string",
+            "description": "",
+            "default": "",
+            "__n__metadata__": {
+                "id": "_Att_0j82jv32qr",
+                "subCategoryType": null,
+                "nullable": false,
+                "dbType": "text",
+                "primary": false,
+                "placeholder": "",
+                "dbColName": "",
+                "constraints": {}
+            }
+        },
+        "email": {
+            "name": "email",
+            "format": "",
+            "type": "string",
+            "description": "",
+            "default": "",
+            "__n__metadata__": {
+                "id": "_Att_x0uq2srf2n",
+                "subCategoryType": null,
+                "nullable": false,
+                "dbType": "text",
+                "primary": false,
+                "placeholder": "",
+                "dbColName": "",
+                "constraints": {}
+            }
+        },
+        "file": {
+            "name": "file",
+            "format": "",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "__n__metadata__": {
+                "id": "_Att_zffi5poqhm",
+                "subCategoryType": null,
+                "nullable": false,
+                "dbType": "jsonb",
+                "primary": false,
+                "placeholder": "",
+                "dbColName": "",
+                "constraints": {}
+            }
+        },
+        "details": {
+            "name": "details",
+            "format": "",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "__n__metadata__": {
+                "id": "_Att_t1d3hetu44",
+                "subCategoryType": null,
+                "nullable": false,
+                "dbType": "jsonb",
+                "primary": false,
+                "placeholder": "",
+                "dbColName": "",
+                "constraints": {}
+            }
+        }
+    },
+    "required": [
+        "name",
+        "phone",
+        "email",
+        "file",
+        "details"
+    ],
+    "value": "",
+    "__attributeExpansion__": true,
+    "__operationExpansion__": true,
+    "x": -2,
+    "__n__metadata__": {
+        "operations": [
+            {
+                "name": "create"
+            },
+            {
+                "name": "create-all"
+            },
+            {
+                "name": "delete-all"
+            },
+            {
+                "name": "delete-by-id"
+            },
+            {
+                "name": "find-all"
+            },
+            {
+                "name": "find-by-id"
+            },
+            {
+                "name": "update-all"
+            },
+            {
+                "name": "update-by-id"
+            }
+        ]
+    },
+    "userList": {
+        "SSD_SERVICE_ID_sd_uPVwRKYMPI0dxAqs": [
+            "sd_wfRMEGizFvIC52kj"
+        ],
+        "SSD_SERVICE_ID_sd_eio0SSjuVYF2cm7t": [
+            "sd_kPNu3vM51ScSbwJo"
+        ],
+        "SSD_SERVICE_ID_sd_xb79SlU6dA3AjWFg": [
+            "sd_MaO500TVisDIUaqn"
+        ]
+    }
+}

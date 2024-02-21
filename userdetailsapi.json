@@ -1,0 +1,14 @@
+{
+    "displayName": "userDetailsApi",
+    "appName": "userdetailsapi",
+    "description": "creating a user detail management app",
+    "lastModified": "2024-02-20T02:50:52.725Z",
+    "imgSourcePath": "",
+    "version": "1.0.0",
+    "appType": "apiOnly",
+    "templateName": "blank",
+    "createDate": "2024-02-20T01:50:03.432Z",
+    "analyticsId": "07a5c7b0-4ab1-c855-141d-f508ed8c5ad5",
+    "createdStudioVersion": "9.2.1",
+    "isCorrupt": false
+}

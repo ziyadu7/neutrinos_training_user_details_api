@@ -1,0 +1,9 @@
+{
+    "_DM_1t3rom3zx": {
+        "id": "_DM_1t3rom3zx",
+        "name": "user_details",
+        "dbType": "dbModel",
+        "dbConfigId": "sd_0MpEPLPhEvkKRNun",
+        "dbName": "postgres"
+    }
+}

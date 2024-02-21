@@ -1,0 +1,49 @@
+{
+    "/dm/user_details/user_details/update-all": {
+        "post": {
+            "consumes": [],
+            "produces": [],
+            "parameters": [
+                {
+                    "in": "body",
+                    "name": "body",
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "filter": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": [
+                                    "id"
+                                ]
+                            },
+                            "user_details": {
+                                "$ref": "#/definitions/user_details ~ user_details",
+                                "required": []
+                            }
+                        },
+                        "required": []
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/definitions/user_details ~ user_details"
+                        }
+                    },
+                    "description": ""
+                }
+            },
+            "tags": [
+                "user_details"
+            ]
+        }
+    }
+}

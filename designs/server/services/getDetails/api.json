@@ -1,0 +1,319 @@
+[
+    {
+        "id": "SSD_SERVICE_ID_sd_3dkGl2mrrzDQFi5Q",
+        "type": "tab",
+        "createdDate": "2024-02-21T02:52:32.859Z",
+        "label": "api",
+        "disabled": false,
+        "info": "",
+        "functionSeq": 0,
+        "generateNext": true,
+        "serviceName": "api",
+        "relativeParentPath": "getDetails"
+    },
+    {
+        "id": "sd_CrngHBf2Ei8rafNX",
+        "type": "HttpIn",
+        "z": "SSD_SERVICE_ID_sd_3dkGl2mrrzDQFi5Q",
+        "viewType": "server",
+        "nodeType": "start",
+        "name": "",
+        "path": "/details",
+        "uploadpath": "",
+        "summary": "",
+        "description": "",
+        "method": "get",
+        "sequenceId": "",
+        "consumes": "",
+        "produces": "",
+        "filetype": "path",
+        "acceptFileUpload": false,
+        "useDataModel": false,
+        "dataModelIsArray": false,
+        "erd": "",
+        "erdName": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "responses": [],
+            "params": [],
+            "produces": [],
+            "consumes": []
+        },
+        "inputs": 0,
+        "outputs": 1,
+        "validateRequestUsingSwaggerDocs": false,
+        "category": "HTTP",
+        "x": 105,
+        "y": 160,
+        "wires": [
+            [
+                "sd_PXbutp7jkygRZJ6G"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "uploadpath": {
+                "type": "str",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "api",
+        "functionName": "sd_CrngHBf2Ei8rafNX",
+        "generated": false
+    },
+    {
+        "id": "sd_TMEUgepvcoH1FLF5",
+        "type": "CallService",
+        "z": "SSD_SERVICE_ID_sd_3dkGl2mrrzDQFi5Q",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "outputs": 1,
+        "isValidNode": true,
+        "noerr": 0,
+        "service": {
+            "id": "SSD_SERVICE_ID_sd_xb79SlU6dA3AjWFg",
+            "type": "tab",
+            "createdDate": "2024-02-21T02:52:37.881Z",
+            "label": "service",
+            "disabled": false,
+            "info": "",
+            "functionSeq": 0
+        },
+        "flow": {
+            "flowId": "sd_T1KoWAHFNOdeyiWH",
+            "flowName": "sd_T1KoWAHFNOdeyiWH"
+        },
+        "inputVariables": [
+            {
+                "key": "result",
+                "map": true,
+                "valueType": "bh",
+                "value": ""
+            }
+        ],
+        "bhVariables": [],
+        "outputMapping": [
+            {
+                "mapVarType": "input",
+                "key": "result",
+                "valueType": "bh.local",
+                "value": "result",
+                "mapVarName": "result",
+                "localVar": "bh.local.result"
+            }
+        ],
+        "callService": "./service",
+        "startName": "sd_T1KoWAHFNOdeyiWH",
+        "inputParams": [
+            null
+        ],
+        "accept_bh": false,
+        "functionName": "sd_TMEUgepvcoH1FLF5",
+        "category": "General",
+        "x": 445,
+        "y": 80,
+        "wires": [
+            [
+                "sd_zVvWtkxs3H6oKZXg"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "api",
+        "generated": true
+    },
+    {
+        "id": "sd_zVvWtkxs3H6oKZXg",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_3dkGl2mrrzDQFi5Q",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "response setting",
+        "script": "console.log(bh.local.result,'find result showing')\nbh.local.response = {\n    statusCode:200,\n    message:'data fetch successfully',\n    data:bh.local.result\n}",
+        "functionName": "responseSetting",
+        "category": "Function",
+        "x": 625,
+        "y": 160,
+        "wires": [
+            [
+                "sd_VvOnQTgS5sQnroge"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "api",
+        "generated": true
+    },
+    {
+        "id": "sd_VvOnQTgS5sQnroge",
+        "type": "HttpOut",
+        "z": "SSD_SERVICE_ID_sd_3dkGl2mrrzDQFi5Q",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "headers": {},
+        "responseBody": {
+            "type": "bh.local",
+            "value": "response",
+            "ssd_typedInputField": true
+        },
+        "httpcode": {
+            "type": "bh.local",
+            "value": "response.statusCode",
+            "ssd_typedInputField": true
+        },
+        "responseType": "obj",
+        "swaggerResponse": {},
+        "responseMapping": {
+            "status": "bh.local.response.statusCode",
+            "obj": "bh.local.response",
+            "send": "bh.local.response"
+        },
+        "dataModelIsArray": false,
+        "inputs": 1,
+        "outputs": 0,
+        "erd": "",
+        "entity": "",
+        "entityId": "",
+        "ref": "",
+        "editableListData": {
+            "headers": [],
+            "produces": [],
+            "responses": []
+        },
+        "cookiesList": {},
+        "switchStates": {
+            "headers": "Map",
+            "cookies": "Map"
+        },
+        "functionName": "sd_VvOnQTgS5sQnroge",
+        "category": "HTTP",
+        "x": 825,
+        "y": 160,
+        "wires": [],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "api",
+        "generated": true
+    },
+    {
+        "id": "sd_jXCt5FNAqmddTZD9",
+        "type": "CallService",
+        "z": "SSD_SERVICE_ID_sd_3dkGl2mrrzDQFi5Q",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "outputs": 1,
+        "isValidNode": true,
+        "noerr": 0,
+        "service": {
+            "id": "SSD_SERVICE_ID_sd_xb79SlU6dA3AjWFg",
+            "type": "tab",
+            "createdDate": "2024-02-21T02:52:37.881Z",
+            "label": "service",
+            "disabled": false,
+            "info": "",
+            "functionSeq": 0
+        },
+        "flow": {
+            "flowId": "sd_Nk8hdp8AYPjW25b8",
+            "flowName": "fetchOneData"
+        },
+        "inputVariables": [
+            {
+                "key": "result",
+                "map": true,
+                "valueType": "bh",
+                "value": ""
+            },
+            {
+                "key": "id",
+                "map": true,
+                "valueType": "bh.input",
+                "value": "query.id"
+            }
+        ],
+        "bhVariables": [],
+        "outputMapping": [
+            {
+                "mapVarType": "input",
+                "key": "result",
+                "valueType": "bh.local",
+                "value": "result",
+                "mapVarName": "result",
+                "localVar": "bh.local.result"
+            }
+        ],
+        "callService": "./service",
+        "startName": "fetchOneData",
+        "inputParams": [
+            null,
+            "bh.input.query.id"
+        ],
+        "accept_bh": false,
+        "functionName": "sd_jXCt5FNAqmddTZD9",
+        "category": "General",
+        "x": 445,
+        "y": 240,
+        "wires": [
+            [
+                "sd_zVvWtkxs3H6oKZXg"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generated": true,
+        "generateNext": false,
+        "serviceName": "api"
+    },
+    {
+        "id": "sd_PXbutp7jkygRZJ6G",
+        "type": "Switch",
+        "z": "SSD_SERVICE_ID_sd_3dkGl2mrrzDQFi5Q",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "",
+        "property": "query.id",
+        "propertyType": "bh.input",
+        "propertyGv": "bh.input.query.id",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "false",
+                "vt": "str",
+                "gv": "\"false\""
+            },
+            {
+                "t": "neq",
+                "v": "false",
+                "vt": "str",
+                "gv": "\"false\""
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 2,
+        "functionName": "sd_PXbutp7jkygRZJ6G",
+        "category": "Function",
+        "x": 280,
+        "y": 160,
+        "wires": [
+            [
+                "sd_TMEUgepvcoH1FLF5"
+            ],
+            [
+                "sd_jXCt5FNAqmddTZD9"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "api",
+        "generated": true
+    }
+]
