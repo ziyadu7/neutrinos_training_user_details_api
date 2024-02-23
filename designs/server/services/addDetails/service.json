@@ -81,44 +81,6 @@
         "generated": true
     },
     {
-        "id": "sd_kPNu3vM51ScSbwJo",
-        "type": "insert",
-        "z": "SSD_SERVICE_ID_sd_eio0SSjuVYF2cm7t",
-        "viewType": "server",
-        "nodeType": "flow",
-        "name": "",
-        "erd": "_DM_1t3rom3zx",
-        "entityId": "_EN_ga5r31ylxl",
-        "_UI_entityName": "user_details",
-        "dbConfigId": "sd_0MpEPLPhEvkKRNun",
-        "insertObject": "bh.input.data",
-        "resultMapping": "bh.local.result",
-        "functionName": "sd_kPNu3vM51ScSbwJo",
-        "category": "Data Model",
-        "x": 165,
-        "y": 20,
-        "wires": [
-            []
-        ],
-        "__ssdTypeInputs__": {
-            "insertObject": {
-                "type": "bh.input",
-                "value": "data",
-                "constant": false
-            },
-            "resultMapping": {
-                "type": "bh.local",
-                "value": "result",
-                "nullable": "true",
-                "nullableValue": "",
-                "constant": false
-            }
-        },
-        "__n_excludedFromValidation__": {},
-        "generateNext": true,
-        "serviceName": "service"
-    },
-    {
         "id": "sd_pj5zd9GdNJ97rqXQ",
         "type": "ExecuteSql",
         "z": "SSD_SERVICE_ID_sd_eio0SSjuVYF2cm7t",
@@ -126,6 +88,7 @@
         "nodeType": "flow",
         "name": "",
         "databaseConfig": "sd_0MpEPLPhEvkKRNun",
+        "queryType": "",
         "resultMap": {
             "type": "bh.local",
             "value": "result"
@@ -137,6 +100,7 @@
         },
         "inputs": 1,
         "outputs": 1,
+        "params": [],
         "paramMappingObj": {
             "type": "bh.local",
             "value": "insertValues"

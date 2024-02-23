@@ -98,7 +98,7 @@
         "viewType": "common",
         "nodeType": "flow",
         "name": "",
-        "script": "if (bh.input.body?.details) {\n    bh.input.body.details = JSON.parse(bh?.input?.body?.details)\n}\n\nif (bh.input.body?.name?.trim().length == 0 || bh.input.body?.email?.trim().length == 0 || bh.input.body?.phone?.trim().length == 0) {\n    throw {\n        statusCode: 400,\n        message: 'Fill all the required fields'\n    }\n}\n",
+        "script": "if (bh.input.body?.details) {\n    bh.input.body.details = JSON.parse(bh?.input?.body?.details)\n}\nconsole.log(bh.input.body)\nbh.input.file = bh.input?.files?.file?.[0]\nif (bh.input.body?.name?.trim().length == 0 || bh.input.body?.email?.trim().length == 0 || bh.input.body?.phone?.trim().length == 0) {\n    throw {\n        statusCode: 400,\n        message: 'Fill all the required fields'\n    }\n}\n",
         "functionName": "sd_xmZU2R2q0sbRm2OP",
         "category": "Function",
         "x": 320,
@@ -153,7 +153,7 @@
                 "key": "file",
                 "map": true,
                 "valueType": "bh.input",
-                "value": "files.file[0]"
+                "value": "file"
             }
         ],
         "bhVariables": [],
@@ -172,7 +172,7 @@
         "inputParams": [
             "bh.input.body",
             null,
-            "bh.input.files.file[0]"
+            "bh.input.file"
         ],
         "accept_bh": false,
         "functionName": "sd_kBYHo7AJOjqjXDr0",
@@ -215,6 +215,7 @@
             "send": "bh.local.response"
         },
         "dataModelIsArray": false,
+        "cookies": [],
         "inputs": 1,
         "outputs": 0,
         "erd": "",

@@ -1,0 +1,128 @@
+[
+    {
+        "id": "SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6Xr",
+        "type": "tab",
+        "createdDate": "2024-02-22T05:11:02.561Z",
+        "label": "service",
+        "disabled": false,
+        "info": "",
+        "functionSeq": 0,
+        "generateNext": true,
+        "serviceName": "service",
+        "relativeParentPath": "deleteDetails"
+    },
+    {
+        "id": "sd_fILth13j7D0AGsHk",
+        "type": "Start",
+        "z": "SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6Xr",
+        "viewType": "client-server",
+        "nodeType": "start",
+        "name": "",
+        "outputs": 1,
+        "inputVariables": [
+            {
+                "key": "id",
+                "defaultValue": {
+                    "type": "any",
+                    "value": ""
+                },
+                "output": false
+            },
+            {
+                "key": "result",
+                "defaultValue": {
+                    "type": "any",
+                    "value": ""
+                },
+                "output": true
+            }
+        ],
+        "localVariables": [],
+        "accept_bh": false,
+        "functionName": "sd_fILth13j7D0AGsHk",
+        "category": "General",
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "sd_7zcoa3t2jlUFiL4Z"
+            ]
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": true,
+        "serviceName": "service"
+    },
+    {
+        "id": "sd_7zcoa3t2jlUFiL4Z",
+        "type": "remove",
+        "z": "SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6Xr",
+        "viewType": "server",
+        "nodeType": "flow",
+        "name": "",
+        "erd": "_DM_1t3rom3zx",
+        "entityId": "_EN_ga5r31ylxl",
+        "_UI_entityName": "user_details",
+        "dbConfigId": "sd_0MpEPLPhEvkKRNun",
+        "primayKey": "id",
+        "operationType": "deleteByID",
+        "_ID": "bh.input.id",
+        "filterBy": "",
+        "resultMapping": "bh.local.response",
+        "functionName": "sd_7zcoa3t2jlUFiL4Z",
+        "category": "Data Model",
+        "x": 325,
+        "y": 160,
+        "wires": [
+            [
+                "sd_7b9qxYfDvS7hAK9i"
+            ]
+        ],
+        "__ssdTypeInputs__": {
+            "_ID": {
+                "type": "bh.input",
+                "value": "id",
+                "nullable": "true",
+                "nullableValue": "",
+                "constant": false
+            },
+            "filterBy": {
+                "type": "bh",
+                "value": "",
+                "nullable": "true",
+                "nullableValue": "",
+                "constant": false
+            },
+            "resultMapping": {
+                "type": "bh.local",
+                "value": "response",
+                "constant": false
+            }
+        },
+        "__n_excludedFromValidation__": {
+            "filterBy": true
+        },
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    },
+    {
+        "id": "sd_7b9qxYfDvS7hAK9i",
+        "type": "Script",
+        "z": "SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6Xr",
+        "viewType": "common",
+        "nodeType": "flow",
+        "name": "setting response",
+        "script": "console.log(bh.local.response)\nbh.input.result = {\n    statusCode:200,\n    message:'Data deleted successfully'\n}",
+        "functionName": "settingResponse",
+        "category": "Function",
+        "x": 485,
+        "y": 160,
+        "wires": [
+            []
+        ],
+        "__n_excludedFromValidation__": {},
+        "generateNext": false,
+        "serviceName": "service",
+        "generated": true
+    }
+]

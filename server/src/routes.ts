@@ -1,4 +1,8 @@
 //CORE_REFERENCE_IMPORTS
+//CORE_REFERENCE_IMPORT-service-SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6Xr
+import { service as SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6Xr } from './sd-services/deleteDetails/service';
+//CORE_REFERENCE_IMPORT-api-SSD_SERVICE_ID_sd_d7ZrNUqc30JvH9Hc
+import { api as SSD_SERVICE_ID_sd_d7ZrNUqc30JvH9Hc } from './sd-services/deleteDetails/api';
 //CORE_REFERENCE_IMPORT-service-SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a
 import { service as SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a } from './sd-services/updateDetails/service';
 //CORE_REFERENCE_IMPORT-api-SSD_SERVICE_ID_sd_3eEKIK5SUaD1Lj70
@@ -14,6 +18,10 @@ import { api as SSD_SERVICE_ID_sd_uPVwRKYMPI0dxAqs } from './sd-services/addDeta
 
 export const UserRoutes = [
     //CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY
+//CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY-service-SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6Xr
+SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6Xr,
+//CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY-api-SSD_SERVICE_ID_sd_d7ZrNUqc30JvH9Hc
+SSD_SERVICE_ID_sd_d7ZrNUqc30JvH9Hc,
 //CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY-service-SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a
 SSD_SERVICE_ID_sd_Ao6nf8kLJlagcj6a,
 //CORE_REFERENCE_PUSH_TO_ROUTE_ARRAY-api-SSD_SERVICE_ID_sd_3eEKIK5SUaD1Lj70

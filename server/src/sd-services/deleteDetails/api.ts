@@ -4,12 +4,10 @@ let instance = null;
 //append_imports_start
 
 import * as cookieParser from 'cookie-parser'; //_splitter_
-import * as os from 'os'; //_splitter_
-import { sep } from 'path'; //_splitter_
 import { SDBaseService } from '../../services/SDBaseService'; //_splitter_
 import { TracerService } from '../../services/TracerService'; //_splitter_
 import log from '../../utils/Logger'; //_splitter_
-import * as SSD_SERVICE_ID_sd_eio0SSjuVYF2cm7t from './service'; //_splitter_
+import * as SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6Xr from './service'; //_splitter_
 //append_imports_end
 export class api {
   private sdService = new SDBaseService();
@@ -82,7 +80,7 @@ export class api {
   private mountAllPaths() {
     log.debug('mounting all paths for service :: api');
 
-    this.app['post'](
+    this.app['delete'](
       `${this.serviceBasePath}/details`,
       cookieParser(),
       this.sdService.getMiddlesWaresBySequenceId(
@@ -90,11 +88,6 @@ export class api {
         'pre',
         this.generatedMiddlewares
       ),
-      this.sdService.multipartParser({
-        type: 'path',
-        path: (os.tmpdir() + '').replace(/\\|\//g, sep),
-        options: [{ name: 'file', maxCount: 1 }],
-      }),
 
       async (req, res, next) => {
         let bh: any = {};
@@ -106,10 +99,10 @@ export class api {
             next
           );
           let parentSpanInst = null;
-          bh = await this.sd_xmZU2R2q0sbRm2OP(bh, parentSpanInst);
-          //appendnew_next_sd_wfRMEGizFvIC52kj
+          bh = await this.validation(bh, parentSpanInst);
+          //appendnew_next_sd_XgAUfQJHoNlYhOHt
         } catch (e) {
-          return await this.errorHandler(bh, e, 'sd_wfRMEGizFvIC52kj');
+          return await this.errorHandler(bh, e, 'sd_XgAUfQJHoNlYhOHt');
         }
       },
       this.sdService.getMiddlesWaresBySequenceId(
@@ -124,82 +117,83 @@ export class api {
 
   //appendnew_flow_api_start
 
-  async sd_xmZU2R2q0sbRm2OP(bh, parentSpanInst) {
+  async validation(bh, parentSpanInst) {
     const spanInst = this.tracerService.createSpan(
-      'sd_xmZU2R2q0sbRm2OP',
+      'validation',
       parentSpanInst
     );
     try {
-      if (bh.input.body?.details) {
-        bh.input.body.details = JSON.parse(bh?.input?.body?.details);
-      }
-      console.log(bh.input.body);
-      bh.input.file = bh.input?.files?.file?.[0];
-      if (
-        bh.input.body?.name?.trim().length == 0 ||
-        bh.input.body?.email?.trim().length == 0 ||
-        bh.input.body?.phone?.trim().length == 0
-      ) {
+      const id = bh.input.query?.id;
+      console.log(bh.input.query);
+      if (id == undefined) {
         throw {
           statusCode: 400,
-          message: 'Fill all the required fields',
+          message: 'Id not found in query',
         };
       }
-
       this.tracerService.sendData(spanInst, bh);
-      bh = await this.sd_kBYHo7AJOjqjXDr0(bh, parentSpanInst);
-      //appendnew_next_sd_xmZU2R2q0sbRm2OP
+      bh = await this.callingDeleteService(bh, parentSpanInst);
+      //appendnew_next_validation
       return bh;
     } catch (e) {
       return await this.errorHandler(
         bh,
         e,
-        'sd_xmZU2R2q0sbRm2OP',
+        'sd_VFNOkoLP6HEIa2Je',
         spanInst,
-        'sd_xmZU2R2q0sbRm2OP'
+        'validation'
       );
     }
   }
 
-  async sd_kBYHo7AJOjqjXDr0(bh, parentSpanInst) {
+  async callingDeleteService(bh, parentSpanInst) {
     const spanInst = this.tracerService.createSpan(
-      'sd_kBYHo7AJOjqjXDr0',
+      'callingDeleteService',
       parentSpanInst
     );
     try {
-      const SSD_SERVICE_ID_sd_eio0SSjuVYF2cm7tInstance: SSD_SERVICE_ID_sd_eio0SSjuVYF2cm7t.service =
-        SSD_SERVICE_ID_sd_eio0SSjuVYF2cm7t.service.getInstance();
+      const SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6XrInstance: SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6Xr.service =
+        SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6Xr.service.getInstance();
       let outputVariables =
-        await SSD_SERVICE_ID_sd_eio0SSjuVYF2cm7tInstance.addDetails(
+        await SSD_SERVICE_ID_sd_uZYDxExOFC3Mj6XrInstance.sd_fILth13j7D0AGsHk(
           spanInst,
-          bh.input.body,
-          undefined,
-          bh.input.file
+          bh.input.query.id,
+          undefined
         );
-      bh.local.response = outputVariables.input.response;
+      bh.local.response = outputVariables.input.result;
 
       this.tracerService.sendData(spanInst, bh);
-      await this.addDetailsHttpOut(bh, parentSpanInst);
-      //appendnew_next_sd_kBYHo7AJOjqjXDr0
+      await this.sd_NoE2jKFv57XNPaUj(bh, parentSpanInst);
+      //appendnew_next_callingDeleteService
       return bh;
     } catch (e) {
       return await this.errorHandler(
         bh,
         e,
-        'sd_kBYHo7AJOjqjXDr0',
+        'sd_hbxdYDXaB0t2HASJ',
         spanInst,
-        'sd_kBYHo7AJOjqjXDr0'
+        'callingDeleteService'
       );
     }
   }
 
-  async addDetailsHttpOut(bh, parentSpanInst) {
+  async sd_NoE2jKFv57XNPaUj(bh, parentSpanInst) {
     try {
       bh.web.res.status(bh.local.response.statusCode).send(bh.local.response);
 
       return bh;
     } catch (e) {
-      return await this.errorHandler(bh, e, 'sd_7vYQDwzSKRUtF4NC');
+      return await this.errorHandler(bh, e, 'sd_NoE2jKFv57XNPaUj');
+    }
+  }
+
+  async sd_GhK9xREWbAc7hexV(bh, parentSpanInst) {
+    try {
+      bh.web.res.status(bh.error.statusCode).send(bh.error);
+
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(bh, e, 'sd_GhK9xREWbAc7hexV');
     }
   }
 
@@ -218,11 +212,28 @@ export class api {
     bh.errorSource = src;
     bh.errorFunName = functionName;
     this.tracerService.sendData(parentSpanInst, bh, true);
-    if (bh.web.next) {
-      bh.web.next(e);
+    if (
+      false ||
+      (await this.sd_gzeBicgpryxdzc8k(bh, parentSpanInst))
+      /*appendnew_next_Catch*/
+    ) {
+      return bh;
     } else {
-      throw e;
+      if (bh.web.next) {
+        bh.web.next(e);
+      } else {
+        throw e;
+      }
     }
+  }
+  async sd_gzeBicgpryxdzc8k(bh, parentSpanInst) {
+    const nodes = ['sd_VFNOkoLP6HEIa2Je'];
+    if (nodes.includes(bh.errorSource)) {
+      await this.sd_GhK9xREWbAc7hexV(bh, parentSpanInst);
+      //appendnew_next_sd_gzeBicgpryxdzc8k
+      return true;
+    }
+    return false;
   }
   //appendnew_flow_api_Catch
 }
